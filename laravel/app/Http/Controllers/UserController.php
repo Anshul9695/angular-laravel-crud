@@ -19,12 +19,17 @@ class UserController extends Controller
         if($validateData->fails()){
             return response::json(['error'=>$validateData->errors()->all()],409);
         }
+        try{
         $user=new User;
         $user->name=$request->name;
         $user->email=$request->email;
         $user->mobile=$request->mobile;
         $user->address=$request->address;
         $user->save();
+        return response::json(["message"=>"record added  successfully"]);
+    }catch(Exception $e){
+        return response::json(["message"=>"can't be added"],409);
+    }
        
     }
 
